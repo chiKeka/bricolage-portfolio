@@ -11,7 +11,7 @@ Takes a user's goal expressed in plain language, determines which domain it belo
 
 ## When it runs
 
-The user invokes `/setup` in Claude Code, or any conversation with the Bricolage plugin enabled. The master is the only agent the user talks to directly — everything else is delegated.
+The user invokes `/setup` in whichever Bricolage client they're running — the target deployment is OpenClaw on free-tier compute; Claude Code is the current local client. The master is the only agent the user talks to directly — everything else is delegated.
 
 ## Links
 

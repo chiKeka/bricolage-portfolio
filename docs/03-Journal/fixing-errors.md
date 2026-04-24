@@ -28,9 +28,9 @@ Weekly notes on what broke, why, and what the fix was. These are the scars that 
 
 **What broke.** The discovery agent scaffolded a new `finance` domain for a user. The next day a different user asked the planner for finance advice, got recommendations from the scaffolded catalog, and had no idea the entries had never been verified by a maintainer.
 
-**Why it mattered.** The whole protocol is load-bearing *because* every resource is validated. A domain scaffolded from a web search is meaningfully less trustworthy than one that shipped with the plugin. The agents had no way to say that.
+**Why it mattered.** The whole protocol is load-bearing *because* every resource is validated. A domain scaffolded from a web search is meaningfully less trustworthy than one that shipped with the blessed catalog. The agents had no way to say that.
 
-**The fix.** Added `trust_level` to every domain: `blessed` (shipped with plugin, reviewed), `user_scaffolded` (local scaffold, not reviewed), `external` (future: signed registry). Discovery now marks all new domains as `user_scaffolded` by default via `ubc_create_domain`. Master and planner both surface the flag in every summary. User-scaffolded content still works — it just wears its hat.
+**The fix.** Added `trust_level` to every domain: `blessed` (shipped in the main repo, reviewed), `user_scaffolded` (local scaffold, not reviewed), `external` (future: signed registry). Discovery now marks all new domains as `user_scaffolded` by default via `ubc_create_domain`. Master and planner both surface the flag in every summary. User-scaffolded content still works — it just wears its hat.
 
 ---
 
@@ -43,7 +43,7 @@ Weekly notes on what broke, why, and what the fix was. These are the scars that 
 **The fix.** Two changes:
 
 1. Every raw `config.toml` now uses placeholder tokens like `YOUR_APIFY_TOKEN`, substituted at runtime from the encrypted store. The raw file never contains a real credential.
-2. Added `.ubc/` to the plugin's own `.gitignore` *and* to the `config.toml` template.
+2. Added `.ubc/` to the repo's `.gitignore` *and* to the `config.toml` template.
 3. Standing pre-push grep against the two common credential-prefix patterns (OpenAI-style bearer tokens and any literal `api` followed by underscore and `key`). Both checks must return empty before any push. Wired into the pre-commit hook.
 
 ---
@@ -64,7 +64,7 @@ Weekly notes on what broke, why, and what the fix was. These are the scars that 
 
 **Why it mattered.** YAML is forgiving about date-string ambiguity. Code must not be.
 
-**The fix.** Schemas in `tools/src/schemas.ts` now explicitly coerce date-like fields with `z.coerce.date().transform(d => d.toISOString().slice(0, 10))`. Invalid entries fail loudly to stderr rather than silently. Added a test to the plugin repo: load every shipped resource YAML, assert each parses.
+**The fix.** Schemas in `tools/src/schemas.ts` now explicitly coerce date-like fields with `z.coerce.date().transform(d => d.toISOString().slice(0, 10))`. Invalid entries fail loudly to stderr rather than silently. Added a test to the main repo: load every shipped resource YAML, assert each parses.
 
 ---
 

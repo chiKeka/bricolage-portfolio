@@ -1,9 +1,9 @@
 # Bricolage Portfolio
 
-Week-4 Proof-of-Work submission for the Super Individual Workshop. A public portfolio that documents [Bricolage](https://github.com/chiKeka/bricolage) — a Claude Code plugin that turns free-tier resources into working outcomes.
+Week-4 Proof-of-Work submission for the Super Individual Workshop. A public portfolio that documents [Bricolage](https://github.com/chiKeka/bricolage) — an agent system that turns free-tier resources into working outcomes. Target deployment: OpenClaw on free-tier compute. Also ships as a Claude Code plugin for local/interactive use.
 
 **Live site:** https://chikeka.github.io/bricolage-portfolio/
-**Source plugin:** https://github.com/chiKeka/bricolage
+**Source repo:** https://github.com/chiKeka/bricolage
 
 ## What's here
 
