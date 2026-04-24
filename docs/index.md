@@ -8,7 +8,7 @@ Built on the ZeroClaw framework · Super Individual Workshop, Week 4 · Proof of
 
 Free-tier services from GitHub, Vercel, Supabase, OpenAI, Cloudflare, and hundreds of others collectively provide enough capacity to build, deploy, and run real applications without paying for infrastructure. The problem is not that the parts don't exist — it's that nobody knows which parts exist, which ones still work, and how to combine them.
 
-**Bricolage** is an agent system — six specialists that know which resources exist, how to claim them, and how to combine them into something that runs. It's designed to be deployed on **OpenClaw** (with MiniClaw and PicoClaw as lighter-weight options); a Claude Code plugin is also available as an interactive client.
+**Bricolage** is an agentic system — six specialists that know which resources exist, how to claim them, and how to combine them into something that runs. It's deployable on **OpenClaw**, **ZeroClaw**, or any compatible agent runtime (MiniClaw and PicoClaw are the lighter-weight options in the same family).
 
 The name is from Lévi-Strauss: *bricolage* is the craft of making do with what's at hand. Scan the available parts, pick the ones that fit the goal, assemble. That is what these agents do.
 
@@ -27,7 +27,7 @@ A domain-agnostic protocol for assembling free resources into outcomes. The syst
 - **Free-tier durability classification** — every resource tagged `cross_subsidy`, `public_good`, `cac_funded`, `community`, `trial`, or `unknown` so the planner can prefer tiers likely to outlast the project
 - **Staleness tracking** — every resource carries a `verified_at` date; entries get a `warn` tag at 90 days, `stale` at 180 days
 
-The source repo lives at **[github.com/chiKeka/bricolage](https://github.com/chiKeka/bricolage)**. A ZeroClaw deployment is on the roadmap — today the system is runnable via its Claude Code plugin and via the platform-agnostic MCP server. This site is the portfolio: the methodology, the agent architecture, and the journal of what broke along the way.
+The source repo lives at **[github.com/chiKeka/bricolage](https://github.com/chiKeka/bricolage)**. The system exposes a platform-agnostic MCP server so it can be wired into OpenClaw, ZeroClaw, or any compatible agent runtime. This site is the portfolio: the methodology, the agent architecture, and the journal of what broke along the way.
 
 ---
 
