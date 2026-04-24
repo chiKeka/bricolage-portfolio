@@ -6,17 +6,17 @@ Weekly notes on what broke, why, and what the fix was. These are the scars that 
 
 ## 2026-03-24 · Renaming UBC → Bricolage
 
-**What broke.** The project shipped as "Universal Basic Compute" for its first few weeks. The name implied a commons — infrastructure that anyone was entitled to. In practice almost every "free tier" in the catalog is customer-acquisition spend, not a public good. The name was overstating the claim.
+**What broke.** The project shipped as "Universal Basic Compute" for its first few weeks. The name implied a commons: infrastructure anyone was entitled to. Most "free tiers" in the catalog are customer-acquisition spend, not a public good. The name was overstating the claim.
 
-**Why it mattered.** Users were building on `trial`-classified resources (OpenAI's $5 starter credit, various "free for 12 months" tiers) and treating them like they were durable. When the credits ran out, the catalog didn't take the blame — I did, for shipping a name that implied permanence.
+**Why it mattered.** Users were building on `trial`-classified resources (OpenAI's $5 starter credit, various "free for 12 months" tiers) and treating them like they were durable. When the credits ran out, the catalog did not take the blame. I did, for shipping a name that implied permanence.
 
-**The fix.** Renamed to Bricolage (Lévi-Strauss's word for "making do with what's at hand") on 2026-03-24. Added the `free_tier_type` classification so the planner can explicitly mark what's durable (`cross_subsidy`, `public_good`) versus what's CAC-funded. Kept the `ubc_` prefix on MCP tools for backward compatibility — the prefix is now a stable token, not a claim.
+**The fix.** Renamed to Bricolage (Lévi-Strauss's word for "making do with what's at hand") on 2026-03-24. Added the `free_tier_type` classification so the planner can explicitly mark what's durable (`cross_subsidy`, `public_good`) versus what's CAC-funded. Kept the `ubc_` prefix on MCP tools for backward compatibility. The prefix is now a stable token, not a claim.
 
 ---
 
 ## 2026-03-23 · Catalog staleness
 
-**What broke.** A user ran `/build` with a plan that included Heroku's free PostgreSQL tier. The planner happily suggested it. The assembler scaffolded the project against it. Deploy failed — Heroku killed the free tier in late 2022.
+**What broke.** A user ran `/build` with a plan that included Heroku's free PostgreSQL tier. The planner happily suggested it. The assembler scaffolded the project against it. Deploy failed. Heroku killed the free tier in late 2022.
 
 **Why it mattered.** The catalog had no concept of time. A resource that was accurate in 2022 looked the same to the planner as one verified yesterday. Free tiers are decaying assets; the catalog was treating them like stone.
 
@@ -30,15 +30,15 @@ Weekly notes on what broke, why, and what the fix was. These are the scars that 
 
 **Why it mattered.** The whole protocol is load-bearing *because* every resource is validated. A domain scaffolded from a web search is meaningfully less trustworthy than one that shipped with the blessed catalog. The agents had no way to say that.
 
-**The fix.** Added `trust_level` to every domain: `blessed` (shipped in the main repo, reviewed), `user_scaffolded` (local scaffold, not reviewed), `external` (future: signed registry). Discovery now marks all new domains as `user_scaffolded` by default via `ubc_create_domain`. Master and planner both surface the flag in every summary. User-scaffolded content still works — it just wears its hat.
+**The fix.** Added `trust_level` to every domain: `blessed` (shipped in the main repo, reviewed), `user_scaffolded` (local scaffold, not reviewed), `external` (future: signed registry). Discovery now marks all new domains as `user_scaffolded` by default via `ubc_create_domain`. Master and planner both surface the flag in every summary. User-scaffolded content still works. It wears its hat.
 
 ---
 
 ## 2026-03-15 · `config.toml` leak in a screenshot
 
-**What broke.** During the Week 2 workshop I pasted a terminal screenshot into the cohort Slack. It showed `.ubc/access/compute/openai.token.enc` — only the filename, but the filename made it obvious that credentials were on disk. One cohort member opened an issue asking whether the file contained plaintext.
+**What broke.** During the Week 2 workshop I pasted a terminal screenshot into the cohort Slack. It showed `.ubc/access/compute/openai.token.enc`. Only the filename, but the filename made it obvious that credentials were on disk. One cohort member opened an issue asking whether the file contained plaintext.
 
-**Why it mattered.** It didn't — tokens are AES-256-GCM encrypted at rest — but the screenshot also happened to include the shell prompt with an Apify token (prefix redacted) visible in the environment export. That was a real leak.
+**Why it mattered.** It did not (tokens are AES-256-GCM encrypted at rest), but the screenshot also happened to include the shell prompt with an Apify token (prefix redacted) visible in the environment export. That was a leak.
 
 **The fix.** Two changes:
 
@@ -54,13 +54,13 @@ Weekly notes on what broke, why, and what the fix was. These are the scars that 
 
 **Why it mattered.** The assembler's "verify" step was checking `HTTP 200` on the root URL only. A pattern with five pages needs five verifications, not one.
 
-**The fix.** Assembler now reads `outcome_types` from the domain and the pattern's `verification_routes` list. For `deployed_app` outcomes, it probes every route the pattern declares. The bug manifested because the Supabase connection string in the edge function had a typo — the new verifier caught it on the second deploy.
+**The fix.** Assembler now reads `outcome_types` from the domain and the pattern's `verification_routes` list. For `deployed_app` outcomes, it probes every route the pattern declares. The bug manifested because the Supabase connection string in the edge function had a typo. The new verifier caught it on the second deploy.
 
 ---
 
 ## 2026-03-05 · Protocol schemas rejected valid YAML
 
-**What broke.** A discovery-agent run produced a `resource.yaml` with `verified_at: 2026-03-05` (no quotes). The Zod loader rejected it because the schema was parsing the field as a string. Silent failure — the discovery agent thought it had written the file successfully.
+**What broke.** A discovery-agent run produced a `resource.yaml` with `verified_at: 2026-03-05` (no quotes). The Zod loader rejected it because the schema was parsing the field as a string. Silent failure. The discovery agent thought it had written the file successfully.
 
 **Why it mattered.** YAML is forgiving about date-string ambiguity. Code must not be.
 
