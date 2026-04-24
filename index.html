@@ -1608,43 +1608,43 @@
 <p>Built on the ZeroClaw framework · Super Individual Workshop, Week 4 · Proof of Work</p>
 <hr />
 <h2 id="why-i-built-this">Why I built this<a class="headerlink" href="#why-i-built-this" title="Permanent link">&para;</a></h2>
-<p>Free-tier services from GitHub, Vercel, Supabase, OpenAI, Cloudflare, and hundreds of others collectively provide enough capacity to build, deploy, and run real applications without paying for infrastructure. The problem is not that the parts don't exist — it's that nobody knows which parts exist, which ones still work, and how to combine them.</p>
-<p><strong>Bricolage</strong> is an agentic system — six specialists that know which resources exist, how to claim them, and how to combine them into something that runs. It's deployable on <strong>OpenClaw</strong>, <strong>ZeroClaw</strong>, or any compatible agent runtime (MiniClaw and PicoClaw are the lighter-weight options in the same family).</p>
-<p>The name is from Lévi-Strauss: <em>bricolage</em> is the craft of making do with what's at hand. Scan the available parts, pick the ones that fit the goal, assemble. That is what these agents do.</p>
-<p>In the AI era, I want to own assets, not just use tools. This lab documents my agent architecture, the protocol that holds it together, and everything that broke along the way.</p>
+<p>Free-tier services from GitHub, Vercel, Supabase, OpenAI, Cloudflare, and hundreds of others give you enough capacity to build, deploy, and run applications without paying for infrastructure. The problem is not that the parts do not exist. It is that nobody knows which parts exist, which ones still work, and how to combine them.</p>
+<p><strong>Bricolage</strong> is an agentic system. Six specialists that know which resources exist, how to claim them, and how to combine them into something that runs. It is deployable on <strong>OpenClaw</strong>, <strong>ZeroClaw</strong>, or any compatible agent runtime. MiniClaw and PicoClaw are the lighter-weight options in the same family.</p>
+<p>The name is from Lévi-Strauss. <em>Bricolage</em> is the craft of making do with what is at hand. Scan the available parts, pick the ones that fit the goal, assemble. That is what these agents do.</p>
+<p>I want to own the tools I use, not rent them. This lab documents my agent architecture, the protocol that holds it together, and everything that broke along the way.</p>
 <hr />
 <h2 id="what-bricolage-is">What Bricolage is<a class="headerlink" href="#what-bricolage-is" title="Permanent link">&para;</a></h2>
-<p>A domain-agnostic protocol for assembling free resources into outcomes. The system ships with a <strong>compute domain</strong> (411 unique cloud services, verified 2026-03-23). Other domains — education, health, finance, research — are scaffolded on the fly by the discovery agent when a user brings a goal the existing domains don't cover.</p>
+<p>A domain-agnostic protocol for assembling free resources into outcomes. The system ships with a <strong>compute domain</strong>: 411 cloud services, verified 2026-03-23. Other domains (education, health, finance, research) are scaffolded on the fly by the discovery agent when a goal does not match any existing domain.</p>
 <ul>
-<li><strong>6 agents</strong> — master, planner, guide, assembler, discovery, infra</li>
-<li><strong>411 free resources</strong> — 10 detailed guides + 408 bulk catalog entries</li>
-<li><strong>5 assembly patterns</strong> — blog-ai, portfolio, saas-starter, ai-chatbot, api-backend</li>
-<li><strong>10 MCP tools</strong> — catalog browsing, status tracking, encrypted token storage</li>
-<li><strong>Free-tier durability classification</strong> — every resource tagged <code>cross_subsidy</code>, <code>public_good</code>, <code>cac_funded</code>, <code>community</code>, <code>trial</code>, or <code>unknown</code> so the planner can prefer tiers likely to outlast the project</li>
-<li><strong>Staleness tracking</strong> — every resource carries a <code>verified_at</code> date; entries get a <code>warn</code> tag at 90 days, <code>stale</code> at 180 days</li>
+<li><strong>6 agents</strong>: master, planner, guide, assembler, discovery, infra</li>
+<li><strong>411 free resources</strong>: 10 detailed guides plus 408 bulk catalog entries</li>
+<li><strong>5 assembly patterns</strong>: blog-ai, portfolio, saas-starter, ai-chatbot, api-backend</li>
+<li><strong>10 MCP tools</strong>: catalog browsing, status tracking, encrypted token storage</li>
+<li><strong>Free-tier durability classification</strong>: every resource tagged <code>cross_subsidy</code>, <code>public_good</code>, <code>cac_funded</code>, <code>community</code>, <code>trial</code>, or <code>unknown</code>, so the planner can prefer tiers likely to outlast the project</li>
+<li><strong>Staleness tracking</strong>: every resource carries a <code>verified_at</code> date. Entries get a <code>warn</code> tag at 90 days, <code>stale</code> at 180 days</li>
 </ul>
-<p>The source repo lives at <strong><a href="https://github.com/chiKeka/bricolage">github.com/chiKeka/bricolage</a></strong>. The system exposes a platform-agnostic MCP server so it can be wired into OpenClaw, ZeroClaw, or any compatible agent runtime. This site is the portfolio: the methodology, the agent architecture, and the journal of what broke along the way.</p>
+<p>The source repo lives at <strong><a href="https://github.com/chiKeka/bricolage">github.com/chiKeka/bricolage</a></strong>. The system exposes a platform-agnostic MCP server so it can be wired into OpenClaw, ZeroClaw, or any compatible agent runtime. This site is the portfolio: methodology, agent architecture, and the journal of what broke along the way.</p>
 <hr />
 <h2 id="lead-agents">Lead agents<a class="headerlink" href="#lead-agents" title="Permanent link">&para;</a></h2>
-<p>The master agent is the entry point. It routes goals to five specialists:</p>
+<p>The master is the entry point. It routes goals to five specialists.</p>
 <ul>
-<li><a href="02-Agents/master/IDENTITY/"><strong>master</strong></a> — entry point; reads the goal, picks the domain, delegates</li>
-<li><a href="02-Agents/planner/IDENTITY/"><strong>planner</strong></a> — reads the catalog, picks the minimal set of resources</li>
-<li><a href="02-Agents/guide/IDENTITY/"><strong>guide</strong></a> — walks the user through account creation and token capture</li>
-<li><a href="02-Agents/assembler/IDENTITY/"><strong>assembler</strong></a> — takes the plan + acquired access and builds the outcome</li>
-<li><a href="02-Agents/discovery/IDENTITY/"><strong>discovery</strong></a> — scaffolds a new domain when a goal fits nowhere</li>
-<li><a href="02-Agents/infra/IDENTITY/"><strong>infra</strong></a> — deploys the runtime onto user-provisioned free compute</li>
+<li><a href="02-Agents/master/IDENTITY/"><strong>master</strong></a>: reads the goal, picks the domain, delegates</li>
+<li><a href="02-Agents/planner/IDENTITY/"><strong>planner</strong></a>: reads the catalog, picks the minimal set of resources</li>
+<li><a href="02-Agents/guide/IDENTITY/"><strong>guide</strong></a>: walks the user through account creation and token capture</li>
+<li><a href="02-Agents/assembler/IDENTITY/"><strong>assembler</strong></a>: takes the plan plus acquired access and builds the outcome</li>
+<li><a href="02-Agents/discovery/IDENTITY/"><strong>discovery</strong></a>: scaffolds a new domain when a goal fits nowhere</li>
+<li><a href="02-Agents/infra/IDENTITY/"><strong>infra</strong></a>: deploys the runtime onto user-provisioned free compute</li>
 </ul>
 <hr />
 <h2 id="navigation">Navigation<a class="headerlink" href="#navigation" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="03-Journal/fixing-errors/">Troubleshooting journal</a> — what broke along the way</li>
-<li><a href="04-Showcase/best-results/">Showcase of best outputs</a> — Bricolage agents in action</li>
+<li><a href="03-Journal/fixing-errors/">Troubleshooting journal</a>: what broke along the way</li>
+<li><a href="04-Showcase/best-results/">Showcase of best outputs</a>: Bricolage agents in action</li>
 <li><a href="https://github.com/chiKeka/bricolage">Source code on GitHub</a></li>
 </ul>
 <hr />
 <h2 id="the-honest-pitch">The honest pitch<a class="headerlink" href="#the-honest-pitch" title="Permanent link">&para;</a></h2>
-<p>Free tiers are decaying assets. Heroku-in-2022 is the canonical case: a generous free tier that vanished when the unit economics changed. Bricolage treats them as such — every resource carries a verification date, every free tier gets a durability classification, and the planner can exclude stale entries. The protocol is load-bearing, not decorative.</p>
+<p>Free tiers are decaying assets. Heroku-in-2022 is the canonical case: a generous free tier that vanished when the unit economics changed. I treat them as such. Every resource carries a verification date, every free tier gets a durability classification, and the planner can exclude stale entries. A malformed resource YAML fails loudly at load time via the Zod schemas. The protocol is the code, not the prose.</p>
 
 
 
