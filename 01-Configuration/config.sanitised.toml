@@ -1,0 +1,53 @@
+# Bricolage sanitised config.toml
+#
+# This file is the template shape of the agent config after sanitisation.
+# Every real token is replaced by a placeholder. At runtime Bricolage
+# substitutes each placeholder from the encrypted access store at
+# .ubc/access/{domain}/.
+#
+# THIS FILE IS SAFE TO COMMIT. The real config.toml (with tokens) is
+# gitignored. Never replace the placeholders in this template.
+
+[agents.master]
+model = "sonnet"
+max_turns = 30
+
+[agents.planner]
+model = "sonnet"
+max_turns = 15
+
+[agents.guide]
+model = "sonnet"
+max_turns = 40
+
+[agents.assembler]
+model = "opus"
+max_turns = 50
+
+[agents.discovery]
+model = "sonnet"
+max_turns = 50
+
+[agents.infra]
+model = "sonnet"
+max_turns = 30
+
+[domains.compute]
+trust_level = "blessed"
+verified_at = "2026-03-23"
+
+[access.placeholders]
+openai    = "YOUR_OPENAI_API_KEY"
+supabase  = "YOUR_SUPABASE_SERVICE_ROLE_KEY"
+vercel    = "YOUR_VERCEL_TOKEN"
+github    = "YOUR_GITHUB_PAT"
+cloudflare = "YOUR_CLOUDFLARE_API_TOKEN"
+apify     = "YOUR_APIFY_TOKEN"
+
+[storage]
+access_dir = ".ubc/access"
+encryption = "aes-256-gcm"
+
+[staleness]
+warn_after_days  = 90
+stale_after_days = 180

@@ -1,0 +1,12 @@
+site/
+.obsidian/
+*.log
+secrets.toml
+.env
+.env.*
+.ubc/
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+node_modules/

@@ -1,0 +1,78 @@
+site_name: Bruno's Bricolage Lab
+site_description: "Proof of Work — Super Individual Workshop, Week 4"
+site_author: "Bruno (chiKeka)"
+site_url: https://chikeka.github.io/bricolage-portfolio/
+repo_url: https://github.com/chiKeka/bricolage
+repo_name: chiKeka/bricolage
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Agents:
+      - Operator profile: 02-Agents/USER.md
+      - Style guide: 02-Agents/STYLE.md
+      - Master:
+          - Identity: 02-Agents/master/IDENTITY.md
+          - Soul: 02-Agents/master/SOUL.md
+          - Skills: 02-Agents/master/SKILL.md
+      - Planner:
+          - Identity: 02-Agents/planner/IDENTITY.md
+          - Soul: 02-Agents/planner/SOUL.md
+          - Skills: 02-Agents/planner/SKILL.md
+      - Guide:
+          - Identity: 02-Agents/guide/IDENTITY.md
+          - Soul: 02-Agents/guide/SOUL.md
+          - Skills: 02-Agents/guide/SKILL.md
+      - Assembler:
+          - Identity: 02-Agents/assembler/IDENTITY.md
+          - Soul: 02-Agents/assembler/SOUL.md
+          - Skills: 02-Agents/assembler/SKILL.md
+      - Discovery:
+          - Identity: 02-Agents/discovery/IDENTITY.md
+          - Soul: 02-Agents/discovery/SOUL.md
+          - Skills: 02-Agents/discovery/SKILL.md
+      - Infra:
+          - Identity: 02-Agents/infra/IDENTITY.md
+          - Soul: 02-Agents/infra/SOUL.md
+          - Skills: 02-Agents/infra/SKILL.md
+  - Troubleshooting: 03-Journal/fixing-errors.md
+  - Showcase: 04-Showcase/best-results.md
