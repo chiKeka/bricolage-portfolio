@@ -1665,8 +1665,8 @@
 <hr />
 <h2 id="2026-03-18-user-scaffolded-domains-looked-blessed">2026-03-18 · User-scaffolded domains looked blessed<a class="headerlink" href="#2026-03-18-user-scaffolded-domains-looked-blessed" title="Permanent link">&para;</a></h2>
 <p><strong>What broke.</strong> The discovery agent scaffolded a new <code>finance</code> domain for a user. The next day a different user asked the planner for finance advice, got recommendations from the scaffolded catalog, and had no idea the entries had never been verified by a maintainer.</p>
-<p><strong>Why it mattered.</strong> The whole protocol is load-bearing <em>because</em> every resource is validated. A domain scaffolded from a web search is meaningfully less trustworthy than one that shipped with the plugin. The agents had no way to say that.</p>
-<p><strong>The fix.</strong> Added <code>trust_level</code> to every domain: <code>blessed</code> (shipped with plugin, reviewed), <code>user_scaffolded</code> (local scaffold, not reviewed), <code>external</code> (future: signed registry). Discovery now marks all new domains as <code>user_scaffolded</code> by default via <code>ubc_create_domain</code>. Master and planner both surface the flag in every summary. User-scaffolded content still works — it just wears its hat.</p>
+<p><strong>Why it mattered.</strong> The whole protocol is load-bearing <em>because</em> every resource is validated. A domain scaffolded from a web search is meaningfully less trustworthy than one that shipped with the blessed catalog. The agents had no way to say that.</p>
+<p><strong>The fix.</strong> Added <code>trust_level</code> to every domain: <code>blessed</code> (shipped in the main repo, reviewed), <code>user_scaffolded</code> (local scaffold, not reviewed), <code>external</code> (future: signed registry). Discovery now marks all new domains as <code>user_scaffolded</code> by default via <code>ubc_create_domain</code>. Master and planner both surface the flag in every summary. User-scaffolded content still works — it just wears its hat.</p>
 <hr />
 <h2 id="2026-03-15-configtoml-leak-in-a-screenshot">2026-03-15 · <code>config.toml</code> leak in a screenshot<a class="headerlink" href="#2026-03-15-configtoml-leak-in-a-screenshot" title="Permanent link">&para;</a></h2>
 <p><strong>What broke.</strong> During the Week 2 workshop I pasted a terminal screenshot into the cohort Slack. It showed <code>.ubc/access/compute/openai.token.enc</code> — only the filename, but the filename made it obvious that credentials were on disk. One cohort member opened an issue asking whether the file contained plaintext.</p>
@@ -1674,7 +1674,7 @@
 <p><strong>The fix.</strong> Two changes:</p>
 <ol>
 <li>Every raw <code>config.toml</code> now uses placeholder tokens like <code>YOUR_APIFY_TOKEN</code>, substituted at runtime from the encrypted store. The raw file never contains a real credential.</li>
-<li>Added <code>.ubc/</code> to the plugin's own <code>.gitignore</code> <em>and</em> to the <code>config.toml</code> template.</li>
+<li>Added <code>.ubc/</code> to the repo's <code>.gitignore</code> <em>and</em> to the <code>config.toml</code> template.</li>
 <li>Standing pre-push grep against the two common credential-prefix patterns (OpenAI-style bearer tokens and any literal <code>api</code> followed by underscore and <code>key</code>). Both checks must return empty before any push. Wired into the pre-commit hook.</li>
 </ol>
 <hr />
@@ -1686,7 +1686,7 @@
 <h2 id="2026-03-05-protocol-schemas-rejected-valid-yaml">2026-03-05 · Protocol schemas rejected valid YAML<a class="headerlink" href="#2026-03-05-protocol-schemas-rejected-valid-yaml" title="Permanent link">&para;</a></h2>
 <p><strong>What broke.</strong> A discovery-agent run produced a <code>resource.yaml</code> with <code>verified_at: 2026-03-05</code> (no quotes). The Zod loader rejected it because the schema was parsing the field as a string. Silent failure — the discovery agent thought it had written the file successfully.</p>
 <p><strong>Why it mattered.</strong> YAML is forgiving about date-string ambiguity. Code must not be.</p>
-<p><strong>The fix.</strong> Schemas in <code>tools/src/schemas.ts</code> now explicitly coerce date-like fields with <code>z.coerce.date().transform(d =&gt; d.toISOString().slice(0, 10))</code>. Invalid entries fail loudly to stderr rather than silently. Added a test to the plugin repo: load every shipped resource YAML, assert each parses.</p>
+<p><strong>The fix.</strong> Schemas in <code>tools/src/schemas.ts</code> now explicitly coerce date-like fields with <code>z.coerce.date().transform(d =&gt; d.toISOString().slice(0, 10))</code>. Invalid entries fail loudly to stderr rather than silently. Added a test to the main repo: load every shipped resource YAML, assert each parses.</p>
 <hr />
 <h2 id="ongoing-picoclaw-reliability">Ongoing · PicoClaw reliability<a class="headerlink" href="#ongoing-picoclaw-reliability" title="Permanent link">&para;</a></h2>
 <p>PicoClaw on GitHub Actions is the default infra recommendation, but GitHub Actions has a 2,000-minute/month free budget that a chatty agent can exhaust. Tracking whether daily catalog-refresh jobs start brushing the limit at around 25 active users. Will graduate to MiniClaw-on-Cloudflare once the numbers force it.</p>
