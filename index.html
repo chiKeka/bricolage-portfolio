@@ -1609,7 +1609,7 @@
 <hr />
 <h2 id="why-i-built-this">Why I built this<a class="headerlink" href="#why-i-built-this" title="Permanent link">&para;</a></h2>
 <p>Free-tier services from GitHub, Vercel, Supabase, OpenAI, Cloudflare, and hundreds of others collectively provide enough capacity to build, deploy, and run real applications without paying for infrastructure. The problem is not that the parts don't exist — it's that nobody knows which parts exist, which ones still work, and how to combine them.</p>
-<p><strong>Bricolage</strong> is an agent system — six specialists that know which resources exist, how to claim them, and how to combine them into something that runs. It's designed to be deployed on <strong>OpenClaw</strong> (with MiniClaw and PicoClaw as lighter-weight options); a Claude Code plugin is also available as an interactive client.</p>
+<p><strong>Bricolage</strong> is an agentic system — six specialists that know which resources exist, how to claim them, and how to combine them into something that runs. It's deployable on <strong>OpenClaw</strong>, <strong>ZeroClaw</strong>, or any compatible agent runtime (MiniClaw and PicoClaw are the lighter-weight options in the same family).</p>
 <p>The name is from Lévi-Strauss: <em>bricolage</em> is the craft of making do with what's at hand. Scan the available parts, pick the ones that fit the goal, assemble. That is what these agents do.</p>
 <p>In the AI era, I want to own assets, not just use tools. This lab documents my agent architecture, the protocol that holds it together, and everything that broke along the way.</p>
 <hr />
@@ -1623,7 +1623,7 @@
 <li><strong>Free-tier durability classification</strong> — every resource tagged <code>cross_subsidy</code>, <code>public_good</code>, <code>cac_funded</code>, <code>community</code>, <code>trial</code>, or <code>unknown</code> so the planner can prefer tiers likely to outlast the project</li>
 <li><strong>Staleness tracking</strong> — every resource carries a <code>verified_at</code> date; entries get a <code>warn</code> tag at 90 days, <code>stale</code> at 180 days</li>
 </ul>
-<p>The source repo lives at <strong><a href="https://github.com/chiKeka/bricolage">github.com/chiKeka/bricolage</a></strong>. A ZeroClaw deployment is on the roadmap — today the system is runnable via its Claude Code plugin and via the platform-agnostic MCP server. This site is the portfolio: the methodology, the agent architecture, and the journal of what broke along the way.</p>
+<p>The source repo lives at <strong><a href="https://github.com/chiKeka/bricolage">github.com/chiKeka/bricolage</a></strong>. The system exposes a platform-agnostic MCP server so it can be wired into OpenClaw, ZeroClaw, or any compatible agent runtime. This site is the portfolio: the methodology, the agent architecture, and the journal of what broke along the way.</p>
 <hr />
 <h2 id="lead-agents">Lead agents<a class="headerlink" href="#lead-agents" title="Permanent link">&para;</a></h2>
 <p>The master agent is the entry point. It routes goals to five specialists:</p>
